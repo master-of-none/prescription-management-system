@@ -1,12 +1,33 @@
+use chrono::prelude::*;
+use std::io;
+
 use mylib::*;
 
 fn main() {
-    let name: String = String::from("ABC");
-    let dob: String = String::from("1997-05-21");
-    let age: Option<u64> = calculate_age(dob.as_str());
-    let date: String = String::from("2023-06-30");
+    let mut name = String::new();
+    println!("Enter the patient's name");
+    io::stdin()
+        .read_line(&mut name)
+        .expect("Failed to read name");
 
-    let patient = Patient::new(name, dob, age, date);
+    let mut dob = String::new();
+    println!("Enter the patient's Date of birth");
+    io::stdin()
+        .read_line(&mut dob)
+        .expect("Failed to read name");
+
+    let dob = dob.trim();
+
+    if !is_valid_dob(dob) {
+        println!("Invalid date of birth given");
+        return;
+    }
+    let age: Option<u64> = calculate_age(dob);
+
+    let today = Local::now();
+    let date = today.format("%Y-%m-%d").to_string();
+
+    let patient = Patient::new(name, dob.to_string(), age, date);
     println!("Name: {}", patient.name);
     println!("DOB: {}", patient.dob);
 
