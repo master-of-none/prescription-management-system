@@ -37,4 +37,7 @@ fn main() {
         println!("Age: Unknown")
     }
     println!("Date: {}", patient.date);
+
+    let var = connect_db();
+    println!("{:?}", var);
 }
