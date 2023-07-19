@@ -56,7 +56,6 @@ pub fn is_valid_dob(dob: &str) -> bool {
         false
     }
 }
-
 pub fn connect_db() -> Result<(), Error> {
     let mut client = Client::connect(
         "postgresql://postgres:kishan@21@localhost/prescription",
@@ -66,14 +65,35 @@ pub fn connect_db() -> Result<(), Error> {
     client.batch_execute(
         "
         CREATE TABLE IF NOT EXISTS patient (
-        id: SERIAL PRIMARY KEY,
-        name: VARCHAR NOT NULL,
-        dob: VARCHAR NOT NULL,
-        age: integer NOT NULL,
-        date: VARCHAR NOT NULL
+        id SERIAL PRIMARY KEY,
+        name VARCHAR NOT NULL,
+        dob DATE NOT NULL,
+        age INTEGER NOT NULL,
+        date DATE NOT NULL
         )
 ",
     )?;
 
     Ok(())
 }
+
+// pub fn connect_db() -> Result<(), Error> {
+//     let mut client = Client::connect(
+//         "postgresql://postgres:kishan@21@localhost/prescription",
+//         NoTls,
+//     )?;
+
+//     client.batch_execute(
+//         "
+//         CREATE TABLE IF NOT EXISTS patient (
+//         id: SERIAL PRIMARY KEY,
+//         name: VARCHAR NOT NULL,
+//         dob: VARCHAR NOT NULL,
+//         age: integer NOT NULL,
+//         date: VARCHAR NOT NULL
+//         )
+// ",
+//     )?;
+
+//     Ok(())
+// }

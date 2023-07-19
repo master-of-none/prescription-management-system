@@ -11,7 +11,7 @@ fn main() {
         .expect("Failed to read name");
 
     let mut dob = String::new();
-    println!("Enter the patient's Date of birth");
+    println!("Enter the patient's Date of birth (YYYY-MM-DD)");
     io::stdin()
         .read_line(&mut dob)
         .expect("Failed to read name");
