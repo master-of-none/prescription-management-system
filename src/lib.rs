@@ -1,4 +1,8 @@
+use std::error::Error;
+
 use chrono::{Datelike, Local, NaiveDate};
+use sqlx::Connection;
+use sqlx::Row;
 
 #[derive(Debug)]
 pub struct Patient {
@@ -54,4 +58,17 @@ pub fn is_valid_dob(dob: &str) -> bool {
     } else {
         false
     }
+}
+
+#[tokio::main]
+pub async fn connect_db() -> Result<(), Box<dyn Error>>{
+    let url = "postgres://postgres:mysecretpassword@localhost:5432/prescription";
+    let mut conn = sqlx::PgConnection::connect(url).await?;
+
+    let res = sqlx::query("select 1 + 1 as sum")
+        .fetch_one(&mut conn)
+        .await?;
+    let sum:i32 = res.get("sum");
+    println!("Sum is {}", sum);
+    Ok(())
 }
